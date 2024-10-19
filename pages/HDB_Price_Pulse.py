@@ -11,7 +11,7 @@ from helper_functions.utility import check_password  # Import the check_password
 #     st.stop()
 
 # Set the title of the Streamlit app
-st.title("HDB PricePulse")
+st.title("🏠 HDB PricePulse")
 
 # Description
 st.write(""" 
@@ -198,3 +198,34 @@ avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=F
 fig = go.Figure(data=[go.Bar(x=avg_price_by_town['town'], y=avg_price_by_town['resale_price'],marker=dict(color='#007A78'))])
 fig.update_layout(title='Average Resale Price by Town in 2024', xaxis_title='Town', yaxis_title='Average Resale Price')
 st.plotly_chart(fig)
+
+
+# Custom CSS
+st.markdown("""
+    <style>
+        .title {
+            font-size: 40px;
+            color: #007A78;
+            text-align: center;
+        }
+        .description {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #777;
+        }
+        .input-label {
+            font-weight: bold;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #007A78;
+            margin-top: 40px;
+        }
+    </style>
+""", unsafe_allow_html=True)
