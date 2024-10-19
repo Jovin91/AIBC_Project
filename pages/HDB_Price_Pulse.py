@@ -9,12 +9,7 @@ from helper_functions.utility import check_password  # Import the check_password
 # Add custom CSS
 st.markdown("""
     <style>
-        .main {
-            background-color: white;  /* Changed to white */
-            padding: 0px;
-            border-radius: 0px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0);
-        }
+
         h1 {
             color: #2c3e50;
         }
