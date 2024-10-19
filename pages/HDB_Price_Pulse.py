@@ -6,6 +6,37 @@ from sklearn.linear_model import LinearRegression
 import logging
 from helper_functions.utility import check_password  # Import the check_password function
 
+
+# Custom CSS
+st.markdown("""
+    <style>
+        .title {
+            font-size: 40px;
+            color: #007A78;
+            text-align: center;
+        }
+        .description {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 12px;
+            color: #777;
+        }
+        .input-label {
+            font-weight: bold;
+        }
+        .section-title {
+            font-size: 24px;
+            color: #007A78;
+            margin-top: 40px;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
 # # Password check at the start of the app
 # if not check_password():
 #     st.stop()
@@ -200,32 +231,4 @@ fig.update_layout(title='Average Resale Price by Town in 2024', xaxis_title='Tow
 st.plotly_chart(fig)
 
 
-# Custom CSS
-st.markdown("""
-    <style>
-        .title {
-            font-size: 40px;
-            color: #007A78;
-            text-align: center;
-        }
-        .description {
-            font-size: 18px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 12px;
-            color: #777;
-        }
-        .input-label {
-            font-weight: bold;
-        }
-        .section-title {
-            font-size: 24px;
-            color: #007A78;
-            margin-top: 40px;
-        }
-    </style>
-""", unsafe_allow_html=True)
+
