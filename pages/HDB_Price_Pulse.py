@@ -7,9 +7,9 @@ from sklearn.linear_model import LinearRegression
 import logging
 from helper_functions.utility import check_password  # Import the check_password function
 
-# Password check at the start of the app
-if not check_password():
-    st.stop()
+# # Password check at the start of the app
+# if not check_password():
+#     st.stop()
 
 # Set the title of the Streamlit app
 st.title("HDB PricePulse")
