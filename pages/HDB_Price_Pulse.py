@@ -6,48 +6,53 @@ from sklearn.linear_model import LinearRegression
 import logging
 from helper_functions.utility import check_password  # Import the check_password function
 
-
-# Custom CSS
+# Add custom CSS
 st.markdown("""
     <style>
-        .title {
-            font-size: 40px;
-            color: #007A78;
-            text-align: center;
+        .main {
+            background-color: #f0f2f5;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        h2 {
+            color: #2980b9;
+        }
+        .stButton>button {
+            background-color: #27ae60;
+            color: white;
+        }
+        .stButton>button:hover {
+            background-color: #219653;
+        }
+        .chart-container {
+            margin-top: 20px;
         }
         .description {
             font-size: 18px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 12px;
-            color: #777;
-        }
-        .input-label {
-            font-weight: bold;
-        }
-        .section-title {
-            font-size: 24px;
-            color: #007A78;
-            margin-top: 40px;
+            color: #34495e;
         }
     </style>
 """, unsafe_allow_html=True)
+
 
 # # Password check at the start of the app
 # if not check_password():
 #     st.stop()
 
 # Set the title of the Streamlit app
+st.markdown('<div class="main">', unsafe_allow_html=True)
 st.title("🏠 HDB PricePulse")
 
 # Description
+st.markdown('<div class="description">', unsafe_allow_html=True)
 st.write(""" 
 Introducing HDB PricePulse, your go-to tool for accurate HDB resale price estimates and market trends. Just input key details, and get instant price predictions based on real-time data. Plus, track and visualize market trends to stay ahead. Whether you're a buyer, seller, or investor, HDB PricePulse helps you make informed property decisions with ease. 
 """)
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Define the path to your CSV file
 csv_file_path = "Resale_Dataset.csv"
