@@ -39,9 +39,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# # Password check at the start of the app
-# if not check_password():
-#     st.stop()
+# Password check at the start of the app
+if not check_password():
+    st.stop()
 
 # Set the title of the Streamlit app
 st.markdown('<div class="main">', unsafe_allow_html=True)
