@@ -10,7 +10,7 @@ from helper_functions.utility import check_password  # Import the check_password
 st.markdown("""
     <style>
         .main {
-            background-color: #f0f2f5;
+            background-color: white;  /* Changed to white */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -39,9 +39,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# Password check at the start of the app
-if not check_password():
-    st.stop()
 
 # Set the title of the Streamlit app
 st.markdown('<div class="main">', unsafe_allow_html=True)
