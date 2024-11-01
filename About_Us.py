@@ -41,18 +41,21 @@ Our application leverages data from the following sources:
 
 1. **HDB Official Website**: We scrape and process information from the HDB website to ensure our chatbot accesses the latest and most accurate resale procedure guidelines and eligibility criteria.
 - **URLs Scraped**:
-  - [Buying Procedure for Resale Flats](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats)
+  - [Considerations when deciding to buy a resale](https://www.mymoneysense.gov.sg/buying-a-house/purchase-guide/new-or-resale-flat)
+  - [Step-by-step guide to buying a resale flat] (https://dollarsandsense.sg/step-step-guide-buying-resale-hdb-flat-singapore/)
   - [Overview of Buying Procedure](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/overview)
-  - [Eligibility and Housing Loan Options](https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/application-for-an-hdb-flat-eligibility-hfe-letter)
+  - [HDB Flat Eligibility Letter (HFE)](https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/application-for-an-hdb-flat-eligibility-hfe-letter)
   - [Plan, Source, and Contract](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract)
   - [Planning Considerations](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/planning-considerations)
   - [Mode of Financing](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/mode-of-financing)
+  - [Grants for resale flats](https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/couples-and-families/cpf-housing-grants-for-resale-flats-families)
   - [Option to Purchase](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/option-to-purchase)
   - [Request for Value](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/request-for-value)
   - [Resale Application](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-application/application)
   - [Acceptance and Approval](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-application/acceptance-and-approval)
   - [Resale Completion](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-completion)
   - [Conditions After Buying](https://www.hdb.gov.sg/residential/buying-a-flat/conditions-after-buying)
+  - 
 
 2. **Resale Dataset**: A comprehensive CSV dataset containing historical resale prices, flat types, town locations, and other pertinent features essential for training our predictive models.
 - **Dataset Source**: Downloaded from [Data.gov.sg](https://data.gov.sg/datasets/d_8b84c4ee58e3cfc0ece0d773c8ca6abc/view) and hosted locally.
