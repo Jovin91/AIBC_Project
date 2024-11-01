@@ -49,12 +49,15 @@ except Exception as e:
 @st.cache_data(ttl=3600)  # Cache the data for 1 hour to improve performance
 def fetch_hdb_resale_data():
     hdb_urls = [
+        "https://www.mymoneysense.gov.sg/buying-a-house/purchase-guide/new-or-resale-flat",
+        "https://dollarsandsense.sg/step-step-guide-buying-resale-hdb-flat-singapore/",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/overview",
         "https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/application-for-an-hdb-flat-eligibility-hfe-letter",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/planning-considerations",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/mode-of-financing",
+        "https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/couples-and-families/cpf-housing-grants-for-resale-flats-families",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/option-to-purchase",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/request-for-value",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-application/application",
@@ -125,8 +128,10 @@ except Exception as e:
 # 7. Set Up Retrieval QA Chain
 # --------------------------
 template = """Use the following pieces of context to answer the question at the end. 
-If you don't know the answer, just say that you don't know, don't try to make up an answer. 
-Use three sentences maximum. Keep the answer as concise as possible. Always say "thanks for asking!" at the end of the answer.
+If the answer cannot be found, respond that you are unable to assist with the query. 
+Use three sentences maximum. Keep the answer as concise as possible. Use bolding to emphasize key words and phrases. 
+Adopt a soothing and pleasant tone in the response, especially if the query cannot be answered.
+Always say "thanks for asking!" at the end of the answer.
 
 {context}
 Question: {question}
@@ -164,7 +169,7 @@ with col1:
 with col2:
     st.image("Images/genie.png", width=100)  # Use the raw string to avoid issues
 
-st.write("Ask any question related to the HDB Resale Procedure, and I'll provide you with an answer!")
+st.write("Ask any question related to the HDB Resale Procedure or requirements, and I'll provide you with an answer!")
 
 user_question = st.text_input("Your Question:")
 
