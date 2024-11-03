@@ -71,59 +71,19 @@ df = df.dropna(subset=['resale_price', 'remaining_lease_years', 'town', 'flat_ty
 # Subheader for Market Trend
 st.subheader("Market Trend")
 
-# Group by year and calculate the average resale price
-avg_price_by_year = df.groupby('year')['resale_price'].mean().reset_index()
-
-# Create a line chart using Plotly for better customization
-# Create the line chart using Matplotlib
-# Create a Plotly figure
-import plotly.graph_objects as go
-
-# Create a Plotly figure
-# Create the line chart using Matplotlib
-# Create a Plotly figure
-import streamlit as st
-import plotly.graph_objects as go
-
-# Create a Plotly figure
-fig = go.Figure(data=[go.Scatter(x=avg_price_by_year['year'], y=avg_price_by_year['resale_price'], mode='lines+markers', marker=dict(color='blue'),
-                                 text=avg_price_by_year['resale_price'],  # Add text for labels
-                                 hovertemplate='Year: %{x}<br>Average Resale Price: %{y:,.0f}<extra></extra>')])  # Customize hover tooltip
-
-# Update layout (optional)
-fig.update_layout(
-    title='Resale Price Trend Across Years',
-    xaxis_title='Year',
-    yaxis_title='Average Resale Price',
-    template='plotly_dark'  # Optional: Choose a different template for styling
-)
-
-# Display the plot using st.plotly_chart
-st.plotly_chart(fig)
-
-# Flat Type Comparison:
-
 # Filter for 2024 data
-df_2024 = df[df['year'] == 2024]
-
-# Group by flat type and calculate average resale price
-avg_price_by_flat_type = df_2024.groupby('flat_type')['resale_price'].mean().reset_index()
-
-# Create a bar chart
-fig = go.Figure(data=[go.Bar(x=avg_price_by_flat_type['flat_type'], y=avg_price_by_flat_type['resale_price'],marker=dict(color='#FFC745'))])
-fig.update_layout(title='Average Resale Price by Flat Type in 2024', xaxis_title='Flat Type', yaxis_title='Average Resale Price')
-st.plotly_chart(fig)
+df_2023 = df[df['year'] == 2023]
 
 #Location:
 # Group by town and calculate average resale price
-avg_price_by_town = df_2024.groupby('town')['resale_price'].mean().reset_index()
+avg_price_by_town = df_2023.groupby('town')['resale_price'].mean().reset_index()
 
 # Sort towns by resale price (descending)
 avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=False)
 
 # Create a bar chart
 fig = go.Figure(data=[go.Bar(x=avg_price_by_town['town'], y=avg_price_by_town['resale_price'],marker=dict(color='#007A78'))])
-fig.update_layout(title='Average Resale Price by Town in 2024', xaxis_title='Town', yaxis_title='Average Resale Price')
+fig.update_layout(title='Average Resale Price by Town in 2023', xaxis_title='Town', yaxis_title='Average Resale Price')
 st.plotly_chart(fig)
 
 
