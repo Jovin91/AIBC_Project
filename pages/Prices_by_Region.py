@@ -1,8 +1,7 @@
 import streamlit as st
 import pandas as pd
 import logging
-from helper_functions.utility import check_password  # Import the check_password function
-import plotly.express as px
+import plotly.graph_objects as go
 
 # Add custom CSS
 st.markdown("""
@@ -61,14 +60,29 @@ avg_price_by_town = filtered_data.groupby('town')['resale_price'].mean().reset_i
 # Sort towns by resale price (descending)
 avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=False)
 
-# Create a figure with circles representing houses
-fig = px.scatter(avg_price_by_town, x='town', y='resale_price',
-                 title='Average Resale Price by Town',
-                 labels={'town': 'Town', 'resale_price': 'Average Resale Price'},
-                 markers={'symbol': 'circle'})  # Use circle as the marker
+# Create a bar chart with a house icon
+fig = go.Figure(data=[go.Bar(
+    x=avg_price_by_town['town'],
+    y=avg_price_by_town['resale_price'],
+    marker=dict(color='#007A78')
+)])
 
-# Update layout for better appearance
-fig.update_traces(marker=dict(size=20, color='blue', line=dict(width=2, color='DarkSlateGrey')))
-fig.update_layout(yaxis_title='Average Resale Price', xaxis_title='Town', showlegend=False)
+# Update layout
+fig.update_layout(
+    title='Average Resale Price by Town',
+    xaxis_title='Town',
+    yaxis_title='Average Resale Price',
+    showlegend=False
+)
+
+# Add house icons (if needed, could be done with annotations)
+for index, row in avg_price_by_town.iterrows():
+    fig.add_annotation(
+        x=row['town'],
+        y=row['resale_price'],
+        text='🏠',  # Unicode house emoji
+        showarrow=False,
+        font=dict(size=20)
+    )
 
 st.plotly_chart(fig)
