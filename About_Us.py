@@ -1,4 +1,4 @@
- import streamlit as st
+import streamlit as st
 
 # Title with a suitable logo
 st.markdown("# **About Us**")
