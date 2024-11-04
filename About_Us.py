@@ -17,21 +17,20 @@ with st.expander("IMPORTANT NOTICE: Click to expand/disclose", expanded=False):
     """)
 
 # Project Scope with Icon
-st.markdown("### 🎯 **Project Scope**")
+st.markdown("### **Modules**")
 st.markdown("""
-**HDB Resale ** comprises two main modules:
+The Topic is on HDB resale and it comprises two main modules:
 
 1. **How_to_Resale**: A chatbot that helps you look through the HDB website and other sources on processes and requirements for Resale HDB.
 2. **HDB prices by region**: A trending of the average resale prices by region based on 2023.
 """)
 
 # Data Sources with Icon
-st.markdown("### 📊 **Data Sources**")
+st.markdown("### **Data Sources**")
 st.markdown("""
-Our application leverages data from the following sources:
+Information on requirements and processes are extracted from these websites, including HDB official website and other useful website such as My Money sense and dollars and sense:
 
-1. **HDB Official Website**: We scrape and process information from the HDB website to ensure our chatbot accesses the latest and most accurate resale procedure guidelines and eligibility criteria.
-- **URLs Scraped**:
+1. **URLs Scraped**: 
   - [Considerations when deciding to buy a resale](https://www.mymoneysense.gov.sg/buying-a-house/purchase-guide/new-or-resale-flat)
   - [Step-by-step guide to buying a resale flat] (https://dollarsandsense.sg/step-step-guide-buying-resale-hdb-flat-singapore/)
   - [Overview of Buying Procedure](https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/overview)
