@@ -42,12 +42,23 @@ except Exception as e:
 # --------------------------
 # 4. Fetch and Process Data from HDB Website
 # --------------------------
-@st.cache_data(ttl=3600)  # Cache the data for 1 hour
+@st.cache_data(ttl=3600)  # Cache the data for 1 hour to improve performance
 def fetch_hdb_resale_data():
     hdb_urls = [
         "https://www.mymoneysense.gov.sg/buying-a-house/purchase-guide/new-or-resale-flat",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats",
-        # Additional URLs...
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/overview",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/application-for-an-hdb-flat-eligibility-hfe-letter",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/planning-considerations",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/mode-of-financing",
+        "https://www.hdb.gov.sg/cs/infoweb/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility/couples-and-families/cpf-housing-grants-for-resale-flats-families",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/option-to-purchase",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/plan-source-and-contract/request-for-value",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-application/application",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-application/acceptance-and-approval",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/resale-completion",
+        "https://www.hdb.gov.sg/residential/buying-a-flat/conditions-after-buying"
     ]
     
     headers = {
@@ -62,7 +73,7 @@ def fetch_hdb_resale_data():
     for url in hdb_urls:
         try:
             response = requests.get(url, headers=headers)
-            response.raise_for_status()
+            response.raise_for_status()  # Raises an error for bad responses
             soup = BeautifulSoup(response.text, 'html.parser')
             paragraphs = soup.find_all('p')
             hdb_resale_text += "\n".join([para.get_text() for para in paragraphs]) + "\n"
@@ -115,7 +126,7 @@ template = """Use the following pieces of context to answer the question at the 
 If the answer cannot be found, respond that you are unable to assist with the query. 
 Use three sentences maximum. Keep the answer as concise as possible. Use bolding to emphasize key words and phrases. 
 Adopt a soothing and pleasant tone in the response, especially if the query cannot be answered.
-Always say "Feel free to let us know if you have any other questions!" at the end of the answer.
+Always say "Feel Free to let us know if you have any other questions!" at the end of the answer.
 
 {context}
 Question: {question}
@@ -130,7 +141,7 @@ try:
         llm=llm,
         chain_type="stuff",
         retriever=retriever,
-        return_source_documents=False,
+        return_source_documents=False,  # Set to False to hide source documents
         chain_type_kwargs={"prompt": QA_CHAIN_PROMPT}
     )
 except Exception as e:
@@ -143,49 +154,15 @@ except Exception as e:
 if not check_password():
     st.stop()
 
-# Add custom styling for a better user experience
-st.markdown("""
-    <style>
-        .stApp {
-            background-color: #f7f9fc;
-            font-family: 'Arial', sans-serif;
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        .description {
-            text-align: center;
-            font-size: 18px;
-            color: #34495e;
-        }
-        .stButton>button {
-            background-color: #2980b9;
-            color: white;
-            font-size: 16px;
-        }
-        .stButton>button:hover {
-            background-color: #1f6391;
-        }
-        .stTextInput {
-            text-align: center;
-        }
-    </style>
-""", unsafe_allow_html=True)
-
-# Create two columns: one for the title and one for the image (if needed)
+# Create two columns: one for the title and one for the image
 col1, col2 = st.columns([3, 1])  # Adjust the ratios as needed
 
 with col1:
-    st.title("🏠 HDB Resale Guide")
-    st.write("Unsure about HDB resale and processes? Fear not, let us help you out!")
+    st.title("How to Resale")
 
-with col2:
-    # You can add an image or additional content in the second column if desired
-    st.image("your_image_path.png", width=100)  # Replace with an actual image path
+st.write("Unsure about HDB resale and processes? Fred not, let us help u out!")
 
-# User input for questions
-user_question = st.text_input("Your Question:", placeholder="Type your question here...")
+user_question = st.text_input("Your Question:")
 
 if st.button("Get Answer"):
     if user_question.strip():
