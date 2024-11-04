@@ -16,10 +16,10 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # Set the title of the Streamlit app
-st.title("HDB Prices by Region")
+st.title("HDB average resale prices by Year and Region")
 
 # Description
-st.write("Select the year and flat type of your choice for average pricing.")
+st.write("Select the year and flat type of your choice for average pricing. Fill in your budget and check which are the towns that you can consider.")
 
 # Define the path to your CSV file
 csv_file_path = "Resale_Dataset.csv"
