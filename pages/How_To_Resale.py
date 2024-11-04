@@ -154,15 +154,12 @@ except Exception as e:
 if not check_password():
     st.stop()
 
-# Create two columns: one for the title and one for the image
-col1, col2 = st.columns([3, 1])  # Adjust the ratios as needed
+# Create a title and description
+st.title("🏠 HDB Resale Guide")
+st.write("Unsure about HDB resale and processes? Fear not, let us help you out!")
 
-with col1:
-    st.title("How to Resale")
-
-st.write("Unsure about HDB resale and processes? Fred not, let us help u out!")
-
-user_question = st.text_input("Your Question:")
+# User input for questions
+user_question = st.text_input("Your Question:", placeholder="Type your question here...")
 
 if st.button("Get Answer"):
     if user_question.strip():
