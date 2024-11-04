@@ -19,22 +19,6 @@ logging.basicConfig(
     format='%(asctime)s:%(levelname)s:%(message)s'
 )
 
-# Add custom CSS for background
-st.markdown(
-    """
-    <style>
-    body {
-        background-image: url('https://www.vecteezy.com/vector-art/21477545-artificial-intelligence-chat-bot-concept'); /* Use your image URL */
-        background-size: cover;
-        background-position: center;
-        color: blue; /* Change default text color to blue */
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
 # --------------------------
 # 2. Load Environment Variables
 # --------------------------
