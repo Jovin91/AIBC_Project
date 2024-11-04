@@ -1,30 +1,18 @@
 import streamlit as st
 import pandas as pd
-import plotly.graph_objects as go
+import logging
+from helper_functions.utility import check_password  # Import the check_password function
+import plotly.express as px
 
 # Add custom CSS
 st.markdown("""
     <style>
-        h1 {
-            color: #2c3e50;
-        }
-        h2 {
-            color: #2980b9;
-        }
-        .stButton>button {
-            background-color: #27ae60;
-            color: white;
-        }
-        .stButton>button:hover {
-            background-color: #219653;
-        }
-        .chart-container {
-            margin-top: 20px;
-        }
-        .description {
-            font-size: 18px;
-            color: #34495e;
-        }
+        h1 { color: #2c3e50; }
+        h2 { color: #2980b9; }
+        .stButton>button { background-color: #27ae60; color: white; }
+        .stButton>button:hover { background-color: #219653; }
+        .chart-container { margin-top: 20px; }
+        .description { font-size: 18px; color: #34495e; }
     </style>
 """, unsafe_allow_html=True)
 
@@ -32,7 +20,7 @@ st.markdown("""
 st.title("HDB Prices by Region")
 
 # Description
-st.write("Select the town and flat type of your choice for average pricing.")
+st.write("Select the year and flat type of your choice for average pricing.")
 
 # Define the path to your CSV file
 csv_file_path = "Resale_Dataset.csv"
@@ -52,61 +40,35 @@ df['remaining_lease_years'] = df['remaining_lease'].str.extract(r'(\d+)').astype
 df['month'] = pd.to_datetime(df['month'], format='%Y-%m')
 df['year'] = df['month'].dt.year
 df['resale_price'] = pd.to_numeric(df['resale_price'], errors='coerce')
-df = df.dropna(subset=['resale_price', 'remaining_lease_years', 'town', 'flat_type'])
+df = df.dropna(subset=['resale_price', 'remaining_lease_years', 'town', 'flat_type', 'storey_range', 'floor_area_sqm'])
 
-# Subheader for Market Trend
+# Year and Flat Type Dropdowns
+years = df['year'].unique()
+flat_types = df['flat_type'].unique()
+
+selected_year = st.selectbox("Select Year", years)
+selected_flat_type = st.selectbox("Select Flat Type", flat_types)
+
+# Filter data based on selections
+filtered_data = df[(df['year'] == selected_year) & (df['flat_type'] == selected_flat_type)]
+
+# Market Trend
 st.subheader("Market Trend")
 
-# Dropdown for selecting year
-years = df['year'].unique()
-selected_year = st.selectbox("Select a Year:", options=sorted(years))
+# Group by town and calculate average resale price
+avg_price_by_town = filtered_data.groupby('town')['resale_price'].mean().reset_index()
 
-# Filter for selected year
-df_selected_year = df[df['year'] == selected_year]
+# Sort towns by resale price (descending)
+avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=False)
 
-# Dropdown for selecting town
-towns = df_selected_year['town'].unique()
-selected_town = st.selectbox("Select a Town:", options=sorted(towns))
+# Create a figure with circles representing houses
+fig = px.scatter(avg_price_by_town, x='town', y='resale_price',
+                 title='Average Resale Price by Town',
+                 labels={'town': 'Town', 'resale_price': 'Average Resale Price'},
+                 markers={'symbol': 'circle'})  # Use circle as the marker
 
-# Filter data for the selected town
-df_town = df_selected_year[df_selected_year['town'] == selected_town]
+# Update layout for better appearance
+fig.update_traces(marker=dict(size=20, color='blue', line=dict(width=2, color='DarkSlateGrey')))
+fig.update_layout(yaxis_title='Average Resale Price', xaxis_title='Town', showlegend=False)
 
-# Dropdown for selecting flat type
-flat_types = df_town['flat_type'].unique()
-selected_flat_type = st.selectbox("Select a Flat Type:", options=sorted(flat_types))
-
-# Filter data for the selected flat type
-filtered_data = df_town[df_town['flat_type'] == selected_flat_type]
-
-# Group by town and calculate average resale price for the selected year and flat type
-avg_price = filtered_data['resale_price'].mean()
-
-# Create a figure with a house icon
-fig = go.Figure()
-
-# Add house icon (using an image URL for the house icon)
-fig.add_trace(go.Scatter(
-    x=[0], y=[avg_price],
-    mode='markers+text',
-    marker=dict(symbol='house', size=30, color='#007A78'),
-    text=[f'Average Price: ${avg_price:,.2f}'],
-    textposition='top center'
-))
-
-# Set layout for the figure
-fig.update_layout(
-    title=f'Average Resale Price for {selected_flat_type} in {selected_town} for {selected_year}',
-    xaxis_title='Location',
-    yaxis_title='Average Resale Price',
-    yaxis_tickprefix="$",
-    showlegend=False,
-    xaxis=dict(showgrid=False, zeroline=False, showline=False, title=''),
-    yaxis=dict(showgrid=True, zeroline=False)
-)
-
-# Display the figure
 st.plotly_chart(fig)
-
-# Provide warning if no data is available
-if filtered_data.empty:
-    st.warning("No data available for the selected filters.")
