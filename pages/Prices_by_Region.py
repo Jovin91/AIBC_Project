@@ -7,11 +7,9 @@ import logging
 from helper_functions.utility import check_password  # Import the check_password function
 import plotly.graph_objects as go
 
-
 # Add custom CSS
 st.markdown("""
     <style>
-
         h1 {
             color: #2c3e50;
         }
@@ -35,8 +33,6 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-
-
 # Set the title of the Streamlit app
 st.markdown('<div class="main">', unsafe_allow_html=True)
 st.title("HDB Prices by Region")
@@ -44,7 +40,7 @@ st.title("HDB Prices by Region")
 # Description
 st.markdown('<div class="description">', unsafe_allow_html=True)
 st.write(""" 
-select the town of your choice for average pricing.
+Select the town of your choice for average pricing.
 """)
 st.markdown('</div>', unsafe_allow_html=True)
 
@@ -73,20 +69,25 @@ df = df.dropna(subset=['resale_price', 'remaining_lease_years', 'town', 'flat_ty
 # Subheader for Market Trend
 st.subheader("Market Trend")
 
-# Filter for 2024 data
+# Filter for 2023 data
 df_2023 = df[df['year'] == 2023]
 
-#Location:
+# Location:
 # Group by town and calculate average resale price
 avg_price_by_town = df_2023.groupby('town')['resale_price'].mean().reset_index()
 
 # Sort towns by resale price (descending)
 avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=False)
 
-# Create a bar chart
-fig = go.Figure(data=[go.Bar(x=avg_price_by_town['town'], y=avg_price_by_town['resale_price'],marker=dict(color='#007A78'))])
-fig.update_layout(title='Average Resale Price by Town in 2023', xaxis_title='Town', yaxis_title='Average Resale Price')
-st.plotly_chart(fig)
+# Dropdown for selecting town
+selected_town = st.selectbox("Select a Town:", options=avg_price_by_town['town'].unique())
 
+# Filter data based on selected town
+filtered_data = avg_price_by_town[avg_price_by_town['town'] == selected_town]
+
+# Create a bar chart for the selected town
+fig = go.Figure(data=[go.Bar(x=filtered_data['town'], y=filtered_data['resale_price'], marker=dict(color='#007A78'))])
+fig.update_layout(title=f'Average Resale Price for {selected_town} in 2023', xaxis_title='Town', yaxis_title='Average Resale Price')
+st.plotly_chart(fig)
 
 
