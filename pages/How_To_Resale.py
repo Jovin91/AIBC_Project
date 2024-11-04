@@ -126,7 +126,7 @@ template = """Use the following pieces of context to answer the question at the 
 If the answer cannot be found, respond that you are unable to assist with the query. 
 Use three sentences maximum. Keep the answer as concise as possible. Use bolding to emphasize key words and phrases. 
 Adopt a soothing and pleasant tone in the response, especially if the query cannot be answered.
-Always say "thanks for asking!" at the end of the answer.
+Always say "Feel Free to let us know if you have any other questions!" at the end of the answer.
 
 {context}
 Question: {question}
