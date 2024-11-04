@@ -1,20 +1,7 @@
-import streamlit as st
+ import streamlit as st
 
 # Title with a suitable logo
 st.markdown("# **About Us**")
-
-# Create an expander for the disclaimer
-with st.expander("IMPORTANT NOTICE: Click to expand/disclose", expanded=False):
-    st.write("""
-    This web application is a prototype developed for educational purposes only. 
-    The information provided here is NOT intended for real-world usage and should not be relied upon for making any decisions, 
-    especially those related to financial, legal, or healthcare matters.
-
-    Furthermore, please be aware that the LLM may generate inaccurate or incorrect information. 
-    You assume full responsibility for how you use any generated output.
-
-    Always consult with qualified professionals for accurate and personalized advice.
-    """)
 
 # Project Scope with Icon
 st.markdown("### **Modules**")
@@ -22,7 +9,8 @@ st.markdown("""
 The Topic is on HDB resale and it comprises two main modules:
 
 1. **How_to_Resale**: A chatbot that helps you look through the HDB website and other sources on processes and requirements for Resale HDB.
-2. **HDB prices by region**: A trending of the average resale prices by region based on 2023.
+2. **HDB prices by region**:Users can filter by year and flat type of interest as well as their budget for the resale flat. A graph will show the average
+price of resale flats by region, that are within their budget.
 """)
 
 # Data Sources with Icon
