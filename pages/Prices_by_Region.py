@@ -39,7 +39,7 @@ df['remaining_lease_years'] = df['remaining_lease'].str.extract(r'(\d+)').astype
 df['month'] = pd.to_datetime(df['month'], format='%Y-%m')
 df['year'] = df['month'].dt.year
 df['resale_price'] = pd.to_numeric(df['resale_price'], errors='coerce')
-df = df.dropna(subset=['resale_price', 'remaining_lease_years', 'town', 'flat_type', 'storey_range', 'floor_area_sqm'])
+df = df.dropna(subset=['resale_price', 'remaining_lease_years', 'town', 'flat_type'])
 
 # Year and Flat Type Dropdowns
 years = df['year'].unique()
@@ -51,19 +51,45 @@ selected_flat_type = st.selectbox("Select Flat Type", flat_types)
 # Filter data based on selections
 filtered_data = df[(df['year'] == selected_year) & (df['flat_type'] == selected_flat_type)]
 
-# Market Trend
-st.subheader("Market Trend")
+# Check if filtered data is empty
+if filtered_data.empty:
+    st.warning("No data available for the selected year and flat type.")
+else:
+    # Market Trend
+    st.subheader("Market Trend")
 
-# Group by town and calculate average resale price
-avg_price_by_town = filtered_data.groupby('town')['resale_price'].mean().reset_index()
+    # Group by town and calculate average resale price
+    avg_price_by_town = filtered_data.groupby('town')['resale_price'].mean().reset_index()
 
-# Sort towns by resale price (descending)
-avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=False)
+    # Sort towns by resale price (descending)
+    avg_price_by_town = avg_price_by_town.sort_values(by='resale_price', ascending=False)
 
-# Create a gradient color scale based on resale price
-colors = [
-    f'rgba(0, {int(255 * (i / len(avg_price_by_town)))}, 120, 0.8)' 
-    for i in range(len(avg_price_by_town))
-]
+    # Create a simple color list (all bars the same color for simplicity)
+    colors = ['#007A78'] * len(avg_price_by_town)  # Use a single color for all bars
 
-# Create a bar chart with gradient colors
+    # Create a bar chart
+    fig = go.Figure(data=[go.Bar(
+        x=avg_price_by_town['town'],
+        y=avg_price_by_town['resale_price'],
+        marker=dict(color=colors)
+    )])
+
+    # Update layout
+    fig.update_layout(
+        title='Average Resale Price by Town',
+        xaxis_title='Town',
+        yaxis_title='Average Resale Price',
+        showlegend=False
+    )
+
+    # Add house icons as annotations (optional)
+    for index, row in avg_price_by_town.iterrows():
+        fig.add_annotation(
+            x=row['town'],
+            y=row['resale_price'],
+            text='🏠',  # Unicode house emoji
+            showarrow=False,
+            font=dict(size=20)
+        )
+
+    st.plotly_chart(fig)
