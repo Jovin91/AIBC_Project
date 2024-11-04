@@ -2,15 +2,13 @@ import streamlit as st
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
-from langchain.vectorstores import FAISS  # Changed from HNSWLib to FAISS
+from langchain.vectorstores import FAISS
 from langchain_openai import OpenAI
 from langchain_openai.embeddings import OpenAIEmbeddings
-import os
-from dotenv import load_dotenv
 import requests
 from bs4 import BeautifulSoup
 import logging
-from helper_functions.utility import check_password  # Import the check_password function
+from helper_functions.utility import check_password
 
 # --------------------------
 # 1. Configure Logging
@@ -24,8 +22,6 @@ logging.basicConfig(
 # --------------------------
 # 2. Load Environment Variables
 # --------------------------
-#load_dotenv(r"C:\streamlit_projects\myenv\.env")
-# Load the OpenAI API key from Streamlit secrets
 openai_api_key = st.secrets["openai"]["openai_api_key"]
 
 if not openai_api_key:
@@ -75,25 +71,25 @@ def fetch_hdb_resale_data():
     }
 
     hdb_resale_text = ""
-    try:
-        for url in hdb_urls:
+    for url in hdb_urls:
+        try:
             response = requests.get(url, headers=headers)
-            response.raise_for_status()
+            response.raise_for_status()  # Raises an error for bad responses
             soup = BeautifulSoup(response.text, 'html.parser')
-
-            # Extract all paragraph texts
             paragraphs = soup.find_all('p')
             hdb_resale_text += "\n".join([para.get_text() for para in paragraphs]) + "\n"
 
-        if not hdb_resale_text.strip():
-            raise ValueError("No textual content found on the specified HDB resale pages.")
+        except requests.exceptions.RequestException as e:
+            logging.error(f"Error fetching data from {url}: {e}")
+            st.error(f"Failed to fetch HDB resale data from {url}. Check logs for more details.")
+            return ""
 
-        return hdb_resale_text
-
-    except requests.exceptions.RequestException as e:
-        logging.error(f"Error fetching data from HDB website: {e}")
-        st.error("Failed to fetch HDB resale data. Check logs for more details.")
+    if not hdb_resale_text.strip():
+        logging.error("No textual content found on the specified HDB resale pages.")
+        st.error("No textual content found. Please check the logs.")
         return ""
+
+    return hdb_resale_text
 
 hdb_resale_text = fetch_hdb_resale_data()
 
@@ -156,7 +152,6 @@ except Exception as e:
 # --------------------------
 # 8. Streamlit Chatbot Interface
 # --------------------------
-# Password check at the start of the app
 if not check_password():
     st.stop()
 
