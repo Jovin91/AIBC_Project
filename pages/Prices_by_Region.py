@@ -5,6 +5,8 @@ from datetime import datetime
 from sklearn.linear_model import LinearRegression
 import logging
 from helper_functions.utility import check_password  # Import the check_password function
+import plotly.graph_objects as go
+
 
 # Add custom CSS
 st.markdown("""
