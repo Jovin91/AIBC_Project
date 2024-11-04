@@ -158,12 +158,9 @@ if not check_password():
 col1, col2 = st.columns([3, 1])  # Adjust the ratios as needed
 
 with col1:
-    st.title("Ask the Resale Genie")
+    st.title("How to Resale")
 
-with col2:
-    st.image("Images/genie.png", width=100)  # Use the raw string to avoid issues
-
-st.write("Ask any question related to the HDB Resale Procedure or requirements, and I'll provide you with an answer!")
+st.write("Unsure about HDB resale and processes? Fred not, let us help u out!")
 
 user_question = st.text_input("Your Question:")
 
