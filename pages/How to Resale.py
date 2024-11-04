@@ -155,7 +155,7 @@ if not check_password():
     st.stop()
 
 # Create a title and description
-st.title("🏠 HDB Resale Guide")
+st.title("🏠 How to Resale")
 st.write("Unsure about HDB resale and processes? Fear not, let us help you out!")
 
 # User input for questions
