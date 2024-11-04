@@ -46,7 +46,6 @@ except Exception as e:
 def fetch_hdb_resale_data():
     hdb_urls = [
         "https://www.mymoneysense.gov.sg/buying-a-house/purchase-guide/new-or-resale-flat",
-        "https://dollarsandsense.sg/step-step-guide-buying-resale-hdb-flat-singapore",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats",
         "https://www.hdb.gov.sg/residential/buying-a-flat/buying-procedure-for-resale-flats/overview",
         "https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/application-for-an-hdb-flat-eligibility-hfe-letter",
