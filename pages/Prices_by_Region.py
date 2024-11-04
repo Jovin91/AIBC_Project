@@ -79,16 +79,34 @@ selected_flat_type = st.selectbox("Select a Flat Type:", options=sorted(flat_typ
 filtered_data = df_town[df_town['flat_type'] == selected_flat_type]
 
 # Group by town and calculate average resale price for the selected year and flat type
-avg_price_by_town = filtered_data.groupby('town')['resale_price'].mean().reset_index()
+avg_price = filtered_data['resale_price'].mean()
 
-# Create a bar chart for the selected town and flat type
-if not avg_price_by_town.empty:
-    fig = go.Figure(data=[
-        go.Bar(x=avg_price_by_town['town'], y=avg_price_by_town['resale_price'], marker=dict(color='#007A78'))
-    ])
-    fig.update_layout(title=f'Average Resale Price for {selected_flat_type} in {selected_town} for {selected_year}',
-                      xaxis_title='Town', yaxis_title='Average Resale Price',
-                      yaxis_tickprefix="$", showlegend=False)
-    st.plotly_chart(fig)
-else:
+# Create a figure with a house icon
+fig = go.Figure()
+
+# Add house icon (using an image URL for the house icon)
+fig.add_trace(go.Scatter(
+    x=[0], y=[avg_price],
+    mode='markers+text',
+    marker=dict(symbol='house', size=30, color='#007A78'),
+    text=[f'Average Price: ${avg_price:,.2f}'],
+    textposition='top center'
+))
+
+# Set layout for the figure
+fig.update_layout(
+    title=f'Average Resale Price for {selected_flat_type} in {selected_town} for {selected_year}',
+    xaxis_title='Location',
+    yaxis_title='Average Resale Price',
+    yaxis_tickprefix="$",
+    showlegend=False,
+    xaxis=dict(showgrid=False, zeroline=False, showline=False, title=''),
+    yaxis=dict(showgrid=True, zeroline=False)
+)
+
+# Display the figure
+st.plotly_chart(fig)
+
+# Provide warning if no data is available
+if filtered_data.empty:
     st.warning("No data available for the selected filters.")
